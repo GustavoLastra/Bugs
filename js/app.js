@@ -14,7 +14,6 @@ var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
   this.x += this.speed * dt;
@@ -49,8 +48,6 @@ Enemy.prototype.render = function() {
 };
 
 // Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 var Player = function(x,y) {
 this.x = x;
 this.y = y;
@@ -68,20 +65,10 @@ Setting the Player initial location*/
 
 Player.prototype.update = function(dt) {
   /*The update method for the Player (can be similar to the one for the Enemy)*/
-
 };
 
 Player.prototype.render = function() {
-
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
-    /*The render method for the Player (use the code from the render method for the Enemy)
-    The handleInput method, which should receive user input, allowedKeys (the key which was pressed) and move the player according to that input. In particular:
-    Left key should move the player to the left, right key to the right, up should move the player up and down should move the player down.
-    Recall that the player cannot move off screen (so you will need to check for that and handle appropriately).
-    If the player reaches the water the game should be reset by moving the player back to the initial location (you can write a separate reset Player method to handle that).
-    You can add your own Player methods as needed.*/
-
 };
 
 Player.prototype.handleInput = function (key){
@@ -93,6 +80,8 @@ Player.prototype.handleInput = function (key){
        this.y = this.y - 83;
        if (this.y < 50){
          player.handleReset();
+         myScore.score+= 1;
+         myScore.text="Points: " + myScore.score;
          console.log(this.y);
        }
    } else if (key === 'down' && this.y < 404) {
@@ -104,23 +93,29 @@ Player.prototype.handleReset = function(){
   this.x = 404;
   this.y = 404;
 }
+var Score = function(width, height, color, x, y) {
+    this.tempScore=0;
+    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.text="Points: " + this.score;
+}
 
+Score.prototype.update = function() {
+    //ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    //this.context = this.canvas.getContext("2d");
+    //ctx = myGameArea.context;
 
+}
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-/*var nEnemies = 4
-var allEnemies = [nEnemies];
-var posX = 100;
-var posY = 100;
-for (var i = 0; i < nEnemies; i++) {
-        posY+= 100;
-        allEnemies.push(new Enemy(posX, posY));
-      }*/
+Score.prototype.render = function () {
+  ctx.font = this.width + " " + this.height;
+  ctx.fillStyle = this.color;
+  ctx.fillText(this.text, this.x, this.y);
+}
 
-/*var enemy1 = new Enemy(50,50);
-var enemy2 = new Enemy(150,150);
-var enemy3 = new Enemy(200,200);*/
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
 var enemy3 = new Enemy();
@@ -128,12 +123,9 @@ var allEnemies = [enemy1, enemy2, enemy3];
 // Place the player object in a variable called player
 
 var player = new Player(404, 404);
-//var player = new Player(485, 0);
+var myScore = new Score("30px", "Consolas", "black", 15, 574);
 
-//canvas.width = 505;
-//canvas.height = 606;
 // This listens for key presses and sends the keys to your
-
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
