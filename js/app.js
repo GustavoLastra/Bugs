@@ -81,7 +81,7 @@ Player.prototype.handleInput = function (key){
        if (this.y < 50){
          player.handleReset();
          myScore.score+= 1;
-         myScore.text="Points: " + myScore.score;
+         myScore.text="Magic points: " + myScore.score;
          console.log(this.y);
        }
    } else if (key === 'down' && this.y < 404) {
