@@ -52,6 +52,8 @@ Player.prototype.render = function() {
 
 };
 
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 /*var nEnemies = 4
@@ -83,11 +85,17 @@ Player.prototype.handleInput = function (key){
    } else if (key === 'up' && this.y > 70) {
        this.y = this.y - 83;
        if (this.y < 50){
+         player.handlereset();
          console.log(this.y);
        }
    } else if (key === 'down' && this.y < 404) {
        this.y = this.y + 83;
    }
+}
+
+Player.prototype.handlereset = function(){
+  this.x = 404;
+  this.y = 404;
 }
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
